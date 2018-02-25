@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { BASE_ENDPOINT } from './data/API_Constants.js'
-import RecipeList from './components/RecipeList'
+import Content from './components/Content'
 
 class App extends Component {
   constructor(props) {
@@ -24,17 +24,7 @@ class App extends Component {
 
 
   render() {
-    console.log(this.state)
-    if (this.state.recipes.length > 0) {
-      return (
-        <RecipeList data={this.state.recipes} />
-      );
-    }
-    else {
-      return (
-        <div>{this.state.error}</div>
-      )
-    }
+    return <Content list={this.state.recipes} error={this.state.error} />
   }
 }
 
