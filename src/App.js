@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { BASE_ENDPOINT } from './data/API_Constants.js'
+import FilterInput from './components/FilterInput'
+import FilterButton from './components/FilterButton'
 import Content from './components/Content'
 
 class App extends Component {
@@ -10,14 +12,18 @@ class App extends Component {
 
     this.state = {
       recipes: [],
-      error: ''
+      error: '',
+      searchTerm: ''
     }
   }
 
+  defaultSearch = 'cake'
 
   componentDidMount = () => {
-    this.search('cake')
+    this.setState({ searchTerm: this.defaultSearch }, () => this.search(this.state.searchTerm))
   }
+
+  setSearchTerm = ev => this.setState({ searchTerm: ev.target.value, error: '', recipes: [] })
 
   search = term => {
     fetch(`${BASE_ENDPOINT}&q=${term}`)
@@ -28,7 +34,13 @@ class App extends Component {
 
 
   render() {
-    return <Content list={this.state.recipes} error={this.state.error} />
+    return (
+      <div>
+        <FilterInput value={this.state.searchTerm} onChange={this.setSearchTerm} />
+        <FilterButton onClick={() => this.search(this.state.searchTerm)}>Search</FilterButton>
+        <Content list={this.state.recipes} error={this.state.error} />
+      </div>
+    )
   }
 }
 
