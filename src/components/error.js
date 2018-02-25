@@ -1,7 +1,7 @@
 import React from 'react';
 
-export const Error = () => {
+export const Error = ({error}) => {
     return <div>
-        <h1>An error has occured</h1>
+        <h1>{error.message}</h1>
     </div>
 }
