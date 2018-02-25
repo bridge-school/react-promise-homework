@@ -9,7 +9,8 @@ class App extends Component {
     super(props)
 
     this.state = {
-      recipes: []
+      recipes: [],
+      error: ''
     }
   }
 
@@ -17,15 +18,23 @@ class App extends Component {
   componentDidMount = () => {
     fetch(`${BASE_ENDPOINT}&q=cake`)
       .then(respone => respone.json())
-      .then(response => this.setState({ recipes: [...response.hits] }))
+      .then(response => response.hits.length > 0 ? this.setState({ recipes: [...response.hits] }) : this.setState({ error: "No recipes found" }))
+      .catch(error => this.setState({ error: error.message }))
   }
 
 
   render() {
-
-    return (
-      <RecipeList data={this.state.recipes} />
-    );
+    console.log(this.state)
+    if (this.state.recipes.length > 0) {
+      return (
+        <RecipeList data={this.state.recipes} />
+      );
+    }
+    else {
+      return (
+        <div>{this.state.error}</div>
+      )
+    }
   }
 }
 
