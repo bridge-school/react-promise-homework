@@ -16,7 +16,11 @@ class App extends Component {
 
 
   componentDidMount = () => {
-    fetch(`${BASE_ENDPOINT}&q=cake`)
+    this.search('cake')
+  }
+
+  search = term => {
+    fetch(`${BASE_ENDPOINT}&q=${term}`)
       .then(respone => respone.json())
       .then(response => response.hits.length > 0 ? this.setState({ recipes: [...response.hits] }) : this.setState({ error: "No recipes found" }))
       .catch(error => this.setState({ error: error.message }))
