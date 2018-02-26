@@ -5,7 +5,7 @@ export const Recipe = ({ name, calories }) => {
     <div key={name}>
       Name: {name}
       <br />
-      Calories: {calories}}
+      Calories: {calories}
     </div>
   );
 };
