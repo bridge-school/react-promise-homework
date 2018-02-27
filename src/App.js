@@ -14,6 +14,8 @@ class App extends Component {
     }
   }
 
+  
+
   componentDidMount() {
     const q = 'cakes'
     const endpoint = `${Credentials.URL}?app_id=${Credentials.APP_ID}&app_key=${Credentials.APP_KEY}&q=${q}`
@@ -42,7 +44,7 @@ class App extends Component {
         </header>
         <div className="recipe-list">
           <p>Recipe List:</p>
-            {this.state.recipeList.map(recipe => <Recipe myRecipe = {recipe} />)}
+            {this.state.recipeList.map(recipe => <Recipe key={recipe.uri} myRecipe = {recipe} />)}
             {this.state.errorMessage.map(error => <Error message={error} />)}
         </div>
       </div>
