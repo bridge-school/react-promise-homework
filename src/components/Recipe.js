@@ -1,19 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Recipe extends Component {
-    constructor(props){
-        super(props)
-    }
-
-    render() {
-        return (
-            <div className="Recipe">
-                <p>Name: {this.props.myRecipe.recipe.label} - Calories: {Math.floor(this.props.myRecipe.recipe.calories)}</p>
-            </div>
-        )
-    }
-}
-
+const Recipe = (props) => (
+    <p key={props.myRecipe.recipe.label} >Name: {props.myRecipe.recipe.label} - Calories: {Math.floor(props.myRecipe.recipe.calories)}</p>
+)
 
 export default Recipe;
 

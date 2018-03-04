@@ -14,28 +14,25 @@ class App extends Component {
     }
   }
 
-  
-
-  componentDidMount() {
+  fetchRecipes = () => {
     const q = 'cakes'
     const endpoint = `${Credentials.URL}?app_id=${Credentials.APP_ID}&app_key=${Credentials.APP_KEY}&q=${q}`
     //const endpoint = `${Credentials.URL}?app_id=${Credentials.APP_ID}&app_key=${Credentials.APP_KEY}`
     
-    const fetchRecipes = () =>
-      fetch(endpoint)
-      .then(response => response.json())
-      .then(response => this.setState({recipeList: response.hits}))
-      .catch( (error) => {
-        console.log("error: ", error)
-        this.setState({errorMessage:  [error.message]})
-      })
+    fetch(endpoint)
+    .then(response => response.json())
+    .then(response => this.setState({recipeList: response.hits}))
+    .catch( (error) => {
+      console.log("error: ", error)
+      this.setState({errorMessage:  [error.message]})
+    })
+  }
 
-      fetchRecipes();
-    
+  componentDidMount() {
+    this.fetchRecipes();
   }
 
   render() {
-    
     return (
       <div className="App">
         <header className="App-header">
@@ -44,7 +41,7 @@ class App extends Component {
         </header>
         <div className="recipe-list">
           <p>Recipe List:</p>
-            {this.state.recipeList.map(recipe => <Recipe key={recipe.uri} myRecipe = {recipe} />)}
+            {this.state.recipeList.map(recipe => <Recipe myRecipe = {recipe} />)}
             {this.state.errorMessage.map(error => <Error message={error} />)}
         </div>
       </div>
