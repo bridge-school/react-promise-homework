@@ -26,3 +26,8 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.Input {
+  width: 20em;
+  height: 1.3em;
+}
