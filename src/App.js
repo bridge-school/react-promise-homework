@@ -10,10 +10,11 @@ class App extends Component {
   constructor(){
     super();
     this.state = {
+      search: "cakes",
+      lastSearch: "",
       recipeList: [],
       errorMessage: [],
-      search: "cakes",
-      lastSearch: ""
+      hasError: false
     }
   }
 
@@ -21,17 +22,31 @@ class App extends Component {
     this.setState({search: event.target.value})
   }
 
+  handleErrors = (response) => {
+    //console.log("status: ", response.status)
+    //console.log("statusText: ", response.statusText)
+    if (this.state.lastSearch.length == 0) {
+      throw {message: "Empty search"};
+    };
+    if (this.state.recipeList.length == 0) {
+      throw {message: "No recipes found"};
+    };
+    return response;
+  }
+
   fetchRecipes = (query) => {
     const endpoint = `${Credentials.URL}?app_id=${Credentials.APP_ID}&app_key=${Credentials.APP_KEY}&q=${query}`
-    this.setState({lastSearch: this.state.search})
+    this.setState({
+      lastSearch: this.state.search,
+      hasError: false,
+      errorMessage: []
+    })
 
     fetch(endpoint)
     .then(response => response.json())
     .then(response => this.setState({recipeList: response.hits}))
-    .catch( (error) => {
-      console.log("error: ", error)
-      this.setState({errorMessage:  [error.message]})
-    })
+    .then(this.handleErrors)
+    .catch((error) => this.setState({hasError: true, errorMessage: [error.message], recipeList: []}))
   }
 
   componentDidMount() {
