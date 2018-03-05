@@ -6,6 +6,9 @@ import Recipe from './components/Recipe.js'
 import Error from './components/Error.js'
 import SearchBar from './components/SearchBar'
 
+
+const branch = (test, ComponentOnPass, ComponentOnFail) => props => test ? props.errorMessage.map(error => <Error message={error} />) :  props.recipeList.map(recipe => <Recipe myRecipe = {recipe} />)
+
 class App extends Component {
   constructor(){
     super();
@@ -23,12 +26,10 @@ class App extends Component {
   }
 
   handleErrors = (response) => {
-    //console.log("status: ", response.status)
-    //console.log("statusText: ", response.statusText)
-    if (this.state.lastSearch.length == 0) {
+    if (this.state.lastSearch.length === 0) {
       throw {message: "Empty search"};
     };
-    if (this.state.recipeList.length == 0) {
+    if (this.state.recipeList.length === 0) {
       throw {message: "No recipes found"};
     };
     return response;
@@ -63,8 +64,7 @@ class App extends Component {
         <div className="recipe-list">
           <SearchBar updateSearch={this.updateSearch} search={this.fetchRecipes} query={this.state.search}/>
           <p>Recipe List for "{this.state.lastSearch}":</p>
-            {this.state.recipeList.map(recipe => <Recipe myRecipe = {recipe} />)}
-            {this.state.errorMessage.map(error => <Error message={error} />)}
+            {branch(this.state.hasError, Recipe, Error)(this.state)}
         </div>
       </div>
     );
