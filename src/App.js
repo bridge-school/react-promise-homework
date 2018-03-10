@@ -20,10 +20,8 @@ class App extends Component {
     };
   }
 
-  componentDidMount() {
-    // this.setState({ color: 'blue' });
-    // console.log(this.state);
-    fetch(`${BASE_ENDPOINT}&q=pie`)
+  componentDidMount()  {
+    fetch(`${BASE_ENDPOINT}&q=cake`)
     .then(res => res.json())
     .then(res => {
       res.hits.length === 0 
@@ -33,10 +31,6 @@ class App extends Component {
     .catch(err => {
       this.setState({ error: err.message });
     });
-      // .then(console.log(this.state));
-    // this.setState({ recipeList: response })
-    // .then(console.log(this.state.recipeList));
-    // response.hits.map(hit => console.log(hit.recipe.label)
   }
 
   render() {
@@ -46,11 +40,7 @@ class App extends Component {
           {this.state.error}
         </div>
         <div className="recipe-list">
-          {this.state.recipeList.map(thing => <Recipe 
-            name={thing.recipe}
-            key={thing.id}
-          />
-          )}
+          <Recipe recipeList={this.state.recipeList} />
         </div>
       </div>
     );

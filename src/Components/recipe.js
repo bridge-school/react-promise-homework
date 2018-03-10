@@ -1,7 +1,10 @@
 import React from 'react';
 
-export const Recipe = ({ name, calories }) => {
+export const Recipe = ({ recipeList }) => {
     return (
-        <li>{ name.label }</li>
+        recipeList.map(thing => {
+            return <li>{ thing.recipe.label } Calories: {thing.recipe.calories} </li>
+        }
+          )
     )
 };
