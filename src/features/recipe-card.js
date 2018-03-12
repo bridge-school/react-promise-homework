@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { Recipe } from './recipe';
 
-export const RecipeCard = ({ recipes }) => {
+const capitalizeFirstLetter = (string) => string.charAt(0).toUpperCase() + string.slice(1);
+
+export const RecipeCard = ({ searchTerm, recipes }) => {
   return (
-    <ul>
-      {recipes.map((recipe) => (
-        <li> {recipe.recipe.label} {recipe.recipe.calories}
-        </li>
-      ))}
-    </ul>
+    
+    <table>
+      <tr>
+        <th align='left'>{capitalizeFirstLetter(searchTerm)} Recipe Names</th>
+        <th>Calories</th>
+      </tr>
+      {recipes.map(recipe => <Recipe 
+        label = {recipe.recipe.label}
+        calories = {recipe.recipe.calories} />)}
+    </table>
   );
 }; 
